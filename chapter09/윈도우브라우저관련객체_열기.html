@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!-- 
+	1. BOM(Browser Object Model)이란?
+		- DOM객체들은 HTML태그들을 객체화하여 HTML태그의 콘텐츠나 모양을 변경하기 위해 설계된 것이었다.
+		- 그러면 BOM이란?
+			. 브라우저가 실행되고 있는 환경을 자바스크립트 코드로 접근하고 제어할 수 있도록 설계된 객체들의 그룹을 말한다.
+			. 윈도우에 로드된 문서의 URL, 브라우저가 출력된 스크린 장치, 브라우저의 종류와 기능 등
+	2. BOM종류
+		- window : BOM객체의 최상위에 존재
+		- navigator
+		- history
+		- location
+		- screen
+		
+	3. Window객체
+		- 열려있는 브라우저 윈도우나 탭 윈도우를 window객체라고 한다.
+		- 생성되는 3가지 경우
+		 	1) 새로운 웹 페이지를 로드할 경우 				- 자동생성
+		 	2) <iframe>태그 당 하나씩의 window객체가 생성 	- 자동생성
+		 	3) 개발자가 객체를 생성할 때					- 임의생성
+	4. 공통된 프로퍼티와 메소드
+	
+		1)프로퍼티
+				프로퍼티/컬렉션					설 명
+			-------------------------------------------------------------
+				window					현재 윈도우 객체에 대한 레퍼런스
+				self					(위와 같음- window, window.self, self)	
+				
+				location				location객체에 대한 문자열
+				history					history객체에 대한 문자열
+				navigator				navigator객체에 대한 레퍼런스
+				
+				document				윈도우에 담긴 document객체에 대한 레퍼런스
+				name					윈도우 이름 문자열
+				locationbar				위치(사이트주소)객체에 대한 레퍼런스
+				menubar					맨 위 메뉴들을 모아 놓은 메뉴바 객체에 대한 레퍼런스
+				personalbar				북마크 툴바 등 사용자 개인의 취향에 따라 기능을 두는 바
+				scrollbar				스크롤바 객체에 대한 레퍼런스
+				statusbar				좌측하단에 보여지는 상태 설명 문자열 상태바객체에 대한 레퍼런스
+				toolbar					메뉴바 밑에 아이콘 메뉴들이 있는 툴바 객체에 대한 레퍼런스
+				
+				status					statusbar에 출력되는 문자열. 보안 상 대부분 브라우저에서 허용하도록 세팅해야 문자열변경가능.
+				closed					현재 창이 닫혀 보이지 않는 상태이면 true, 아니면 false
+				frames					윈도우에 존재하는 iframe객체에 대한 컬렉션
+				length					윈도우에 존재하는 iframes의 개수
+				
+				top						윈도우 계층 구조에서 최상위 윈도우 객체에 대한 레퍼런스(최상위 부모창)
+				parent					현재 윈도우의 부모윈도우 객체에 대한 레퍼런스(바로 위의 부모창)
+				
+				innerWidth				수직스크롤바를 포함하여 브랑줘 내에 HTML문저가 출력되는 영역폭
+				innerHeight				수평스크롤바를 포함하여 브랑줘 내에 HTML문저가 출력되는 영역높이
+				outerWidth				윈도우 전체 폭
+				outerHeight				윈도우 전체 높이
+				
+				screenX					스크린상의 윈도우 X좌표
+				screenY					스크린상의 윈도우 Y좌표(모니터 스크린 기준)
+				
+				scrollX					현재 문서의 스크롤 x값
+				scrollY					현재 문서의 스크롤 y값
+		---------------------------------------------------------------------------------------------
+				open()					새 윈도우를 연다
+				close()					윈도우를 닫는다
+				focus()					윈도우에 포커스를 줘서 키보드 입력을 받을 수 있는 상태로 만든다.
+				blur()					현재 윈도우는 포커스를 잃는다.
+				
+				getSelection()			윈도우 내에 선택된 텍스트를 문자열로 리턴해준다.
+				
+				stop()					HTML페이지 로딩을 중단시킨다. 브라우저의 stop버튼을 누른 것과 동일하다.
+				alert()					경고 다이얼로그를 출력한다.
+				confirm()				확인 다이얼로그를 출력한다.
+				prompt()				프롬프트(입력) 다이얼로그를 출력한다.
+				print()					현재 페이지를 출력하기 위해 프린트 다이얼로그를 출력한다.
+				postMessage()			다른 윈도우나 워커 테스크로 문자열 데이터를 보낸다.
+				
+				setInterval()			타임임아웃 코드가 반복 호출되도록 타이머를 가동시킨다(반복)
+				clearInterval()			가동중인 타이머를 중단시킨다
+				setTimeout()			타임아웃 코드를 1회 호출하도록 타이머를 가동시킨다.(1회)
+				clearTimeout()			setTimeout()으로 설정된 타이머를 중단시킨다.
+				
+				moveTo()				지정된 위치로 윈도우창을 이동시킨다.
+				moveBy()				지정된 픽셀만큼 윈도우창을 이동시킨다.
+				
+				resizeTo()				지정된 크기로 윈도우의 크기를 조절한다.
+				resizeBy()				지정된 크기만큼 윈도우의 크기를 조절한다.
+				
+				scrollTo()				특정한 좌표로 스크롤 한다.
+				scrollBy()				주어진 픽셀만큼 상하좌우 스크롤한다.
+				
+		5. 윈도우 열기
+			
+				window.open(출력할 페이지주소,윈도우창이름(생략가능),속성들(,로 분리해서 복수지정,생략가능))
+				
+					- 출력할 페이지주소 : null은 불가하다.
+					- 윈도우 창이름
+								1) 개발자가 만든 창이름
+								2) _blank(새창)
+								3) _parent(부모창) : 만약 부오 윈도우가 없으면 현재 윈도우에 연다.
+								4) _self(현재창)
+								5) _top			: 브라우저 윈도우에 웹페이지를 출력한다.
+								
+								*이름이 없다면: 버튼을 클릭해서 창을 열 때마다 새로운 창이 계속 열린다.
+								 이름이 있다면: 버튼을 클릭하면 새윈도우를 한번만 열고 이후부터는 열린 윈도우를 공유한다.
+					
+					- 속성설정
+							
+							속성 				설명					속성값의 종류
+						------------------------------------------------------------
+							width			윈도우 폭				정수
+							height			윈도우 높이				정수
+							left			스크린상의 x좌표			정수
+							top 			스크린상의 y좌표			정수
+	                       resizable   마우스로 윈도우 크기조절 여부         yes|no 1|0
+	                       location   URL입력 창을 출력하도록 지정         "
+	                       menubar      메뉴바를 출력하도록 지정            "
+	                       scrollbars   수직/수평 스크롤바를 출력         "
+	                       status      윈도우 하단에 상태바를 출력하도록 지정    "
+	                       toolbar      툴바를 출력하도록 지정            "   
+	                     
+	                  예) window.open("sample.html","myWin","resizable=yes")
+	                     window.open(               , "resizable=1") 
+	                     window.open(               , "resizable") 이 3개는 다 같음
+	      
+	      6. window닫기
+	               window.close(), self.close() 가능
+                                 
+                              
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>윈도우브라우저관련객체_열기</title>
+<script type="text/javascript">
+   
+   function load(url) {
+      window.open(url,'myWin','left=300, top=300, width=400, height=400').moveTo(500,500);
+   }
+
+</script>
+</head>
+<body>
+   <h3>window.open()으로 윈도우 열기</h3>
+   <hr>
+   <a href="javascript:load('http://www.graceland.com')">엘비스 프레슬리 홈페이지</a><br>
+   <a href="javascript:load('http://www.universalorland.com')">유니버셜 올랜드 홈페이지</a><br>
+   <a href="javascript:load('http://www.disneyworld.com')">디즈니월드 홈페이지</a><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
